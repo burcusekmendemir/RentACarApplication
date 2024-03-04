@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: RentACarUserDB
+      username: burcuser
+      password: root

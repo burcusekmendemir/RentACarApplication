@@ -7,9 +7,11 @@ import com.burcu.dto.response.RegisterResponseDto;
 import com.burcu.entity.Auth;
 import com.burcu.exception.AuthServiceException;
 import com.burcu.exception.ErrorType;
+import com.burcu.manager.UserManager;
 import com.burcu.mapper.AuthMapper;
 import com.burcu.repository.AuthRepository;
 import com.burcu.utility.CodeGenerator;
+import com.burcu.utility.JwtTokenManager;
 import com.burcu.utility.ServiceManager;
 import com.burcu.utility.enums.EStatus;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,14 @@ import java.util.Optional;
 public class AuthService extends ServiceManager<Auth,Long> {
 
     private final AuthRepository authRepository;
+    private final JwtTokenManager jwtTokenManager;
+    private final UserManager userManager;
 
-    public AuthService(AuthRepository authRepository) {
+    public AuthService(AuthRepository authRepository, JwtTokenManager jwtTokenManager, UserManager userManager) {
         super(authRepository);
         this.authRepository=authRepository;
+        this.jwtTokenManager = jwtTokenManager;
+        this.userManager = userManager;
     }
 
     /**
@@ -36,7 +42,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         Auth auth= AuthMapper.INSTANCE.fromRegisterRequestDtoToAuth(dto);
         auth.setActivationCode(CodeGenerator.createActivationCode());
         save(auth);
-
+        userManager.createUser(AuthMapper.INSTANCE.fromAuthToCreateUserRequestDto(auth));
         return AuthMapper.INSTANCE.fromAuthToRegisterResponseDto(auth);
     }
 
@@ -52,13 +58,14 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if (optionalAuth.isEmpty()){
             throw new AuthServiceException(ErrorType.LOGIN_ERROR);
         }
-//        if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)){
-//
-//        }
-
-        return true;
-
+        if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)){
+            jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
+                    .orElseThrow(()-> new AuthServiceException(ErrorType.TOKEN_NOT_CREATED));
+            return true;
+        }
+        throw new AuthServiceException(ErrorType.ACCOUNT_NOT_ACTIVE);
     }
+
 
     /**
      * AuthId ve activationCode ile kullanıcının hesabının aktifleştirilmesini sağlar.
@@ -75,6 +82,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if (authOptional.get().getActivationCode().equals(dto.getActivationCode())){
             authOptional.get().setStatus(EStatus.ACTIVE);
             update(authOptional.get());
+            userManager.activateUser(authOptional.get().getId());
             return true;
         }else {
             throw new AuthServiceException(ErrorType.ACTIVATION_CODE_ERROR);

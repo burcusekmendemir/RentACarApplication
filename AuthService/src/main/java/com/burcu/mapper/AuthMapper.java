@@ -1,5 +1,6 @@
 package com.burcu.mapper;
 
+import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.request.RegisterRequestDto;
 import com.burcu.dto.response.RegisterResponseDto;
 import com.burcu.entity.Auth;
@@ -15,4 +16,6 @@ public interface AuthMapper {
     Auth fromRegisterRequestDtoToAuth (final RegisterRequestDto dto);
 
     RegisterResponseDto fromAuthToRegisterResponseDto(final Auth auth);
+
+    CreateUserRequestDto fromAuthToCreateUserRequestDto(final Auth auth);
 }
