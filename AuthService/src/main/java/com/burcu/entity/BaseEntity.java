@@ -1,9 +1,8 @@
 package com.burcu.entity;
 
-import jakarta.persistence.Entity;
+
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @MappedSuperclass
 public class BaseEntity {
 

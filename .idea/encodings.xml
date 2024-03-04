@@ -10,5 +10,6 @@
     <file url="file://$PROJECT_DIR$/AuthService/src/main/java/com/burcu/exception/ErrorType.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AuthService/src/main/java/com/burcu/exception/GlobalExceptionHandler.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AuthService/src/main/java/com/burcu/service/AuthService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AuthService/src/main/java/com/burcu/utility/CodeGenerator.java" charset="UTF-8" />
   </component>
 </project>

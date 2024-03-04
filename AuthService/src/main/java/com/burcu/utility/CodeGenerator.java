@@ -5,8 +5,8 @@ import java.util.UUID;
 public class CodeGenerator {
 
     /**
-     * Bu method ile kullanıcı üye olduğunda mail adresine iletilmek üzere
-     * aktivasyon kodu oluşturulur.
+     * Bu method ile kullanÄ±cÄ± Ã¼ye olduÄŸunda mail adresine iletilmek Ã¼zere
+     * aktivasyon kodu oluÅŸturulur.
      * @return
      */
     public static String createActivationCode(){
