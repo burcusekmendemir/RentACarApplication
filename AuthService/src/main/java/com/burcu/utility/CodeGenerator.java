@@ -13,9 +13,11 @@ public class CodeGenerator {
         String code= UUID.randomUUID().toString();
         String [] codeArray=code.split("-");
         String activationCode="";
-        for(String data: codeArray){
-            activationCode+=data.charAt(0);
+        for(String string: codeArray){
+            activationCode+=string.charAt(0);
         }
         return activationCode.toUpperCase();
     }
+
 }
+

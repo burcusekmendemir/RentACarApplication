@@ -14,7 +14,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.util.ArrayList;
 import java.util.List;
 
-@ControllerAdvice //exceptionlar controller katmanında araya girmesini sağlar.
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
 

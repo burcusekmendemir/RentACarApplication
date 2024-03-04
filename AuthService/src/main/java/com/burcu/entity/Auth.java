@@ -3,8 +3,7 @@ package com.burcu.entity;
 import com.burcu.utility.enums.ERole;
 import com.burcu.utility.enums.EStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -21,13 +20,7 @@ public class Auth extends BaseEntity {
     private Long id;
     private String name;
     private String surname;
-
-    @Column(unique = true)
     private String username;
-
-    // TODO : kısıtlamalar dtoda belirtilecek
-    @Size(min = 8, max = 20)
-    @NotNull
     private String password;
     private String tcNo;
     private String email;
