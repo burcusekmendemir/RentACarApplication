@@ -1,6 +1,6 @@
 package com.burcu.utility.enums;
 
-public enum EType {
+public enum EVehicleType {
 
     SEDAN,
     SUV,

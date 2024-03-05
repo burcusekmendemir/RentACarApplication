@@ -1,8 +1,8 @@
 package com.burcu.entity;
 
 import com.burcu.utility.enums.EColour;
-import com.burcu.utility.enums.EStatus;
-import com.burcu.utility.enums.EType;
+import com.burcu.utility.enums.EVehicleStatus;
+import com.burcu.utility.enums.EVehicleType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
@@ -20,12 +20,21 @@ public class Vehicle extends BaseEntity{
     private String id;
     private String plate;
     private String modelId;
+    private EVehicleType type;
     private String year;
-    private String description;
-    private Double price;
-    private EType type;
     private EColour colour;
+    private String description;
+    private Double amountOfFuel;
+    private Double kilometer;
+    private Double hourlyPrice;
+    private Double dailyPrice;
+    private Double weeklyPrice;
+
+
+
+
     @Builder.Default
-    private EStatus status=EStatus.NOT_RENTED;
+    private EVehicleStatus status= EVehicleStatus.NOT_RENTED;
+
 
 }

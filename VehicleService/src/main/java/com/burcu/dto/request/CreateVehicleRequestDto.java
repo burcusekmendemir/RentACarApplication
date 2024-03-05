@@ -1,7 +1,7 @@
 package com.burcu.dto.request;
 
 import com.burcu.utility.enums.EColour;
-import com.burcu.utility.enums.EType;
+import com.burcu.utility.enums.EVehicleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,10 +17,15 @@ public class CreateVehicleRequestDto {
     private String plate;
     private String brandName;
     private String modelName;
-    private EType type;
+    private EVehicleType type;
     private String year;
     private String description;
-    private Double price;
     private EColour colour;
+    private Double kilometer;
+    private Double amountOfFuel;
+    private Double hourlyPrice;
+    private Double dailyPrice;
+    private Double weeklyPrice;
+
 
 }

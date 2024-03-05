@@ -20,7 +20,10 @@ public enum ErrorType {
     TOKEN_NOT_CREATED(4115,"Token olusturulamadi" ,HttpStatus.BAD_REQUEST ),
     ACCOUNT_NOT_ACTIVE(4116, "Hesabınız aktif değildir" ,HttpStatus.FORBIDDEN),
     USER_NOT_CREATED(4117,"Kullanıcı olusturulamadi" ,HttpStatus.BAD_REQUEST ),
-    PLATE_ALREADY_EXISTS(4117,"Bu plaka zaten mevcut" ,HttpStatus.BAD_REQUEST );
+    PLATE_ALREADY_EXISTS(4117,"Bu plaka zaten mevcut" ,HttpStatus.BAD_REQUEST ),
+    VEHICLE_NOT_FOUND(4118,"Arac bulunamadi" ,HttpStatus.BAD_REQUEST ),
+    VEHICLE_IS_RENTED(4119,"Arac kirada" ,HttpStatus.BAD_REQUEST ),
+    VEHICLE_IS_NOT_SUITABLE(4120,"Arac uygun değil!" ,HttpStatus.BAD_REQUEST );
 
     private int code;
     private String message;

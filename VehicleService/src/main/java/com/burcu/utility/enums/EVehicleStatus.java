@@ -1,6 +1,6 @@
 package com.burcu.utility.enums;
 
-public enum EStatus  {
+public enum EVehicleStatus {
 
     NOT_RENTED,
     RENTED,
