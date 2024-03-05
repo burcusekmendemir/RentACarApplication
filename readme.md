@@ -29,5 +29,5 @@
            db kýsmý da yazýlmalý girerken
 
 ```
-     db.createUser({ user: "bilgeUser", pwd: "bilgeUser*", roles: ["readWrite","dbAdmin"]})
+     db.createUser({ user: "burcuser", pwd: "root", roles: ["readWrite","dbAdmin"]})
 ```

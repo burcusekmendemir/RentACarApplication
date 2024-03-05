@@ -63,6 +63,11 @@ public class UserService extends ServiceManager<User,String> {
 
     }
 
+    /**
+     * Kullanıcının statusunu aktif eder.
+     * @param authId
+     * @return
+     */
     public Boolean activateUser(Long authId) {
         Optional<User> userOptional=userRepository.findByAuthId(authId);
         if (userOptional.isEmpty()){
