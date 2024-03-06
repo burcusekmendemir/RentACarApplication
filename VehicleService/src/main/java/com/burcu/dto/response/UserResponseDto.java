@@ -1,23 +1,21 @@
-package com.burcu.entity;
+package com.burcu.dto.response;
 
 import com.burcu.utility.enums.EStatus;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-public class User extends BaseEntity {
 
-    @Id
+public class UserResponseDto {
+
     private String id;
     private Long authId;
     private String name;
@@ -35,6 +33,4 @@ public class User extends BaseEntity {
 
     @Builder.Default
     EStatus status=EStatus.PENDING;
-
-
 }

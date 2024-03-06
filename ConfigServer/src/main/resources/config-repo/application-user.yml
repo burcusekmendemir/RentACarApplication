@@ -2,9 +2,6 @@ server:
   port: 8081
 
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
   data:
     mongodb:
       host: localhost
@@ -12,3 +9,8 @@ spring:
       database: RentACarUserDB
       username: burcuser
       password: root
+
+jwt:
+  secretKey: ${rentCar_secretKey}
+  issuer: ${rentCar_issuer}
+  audience: ${rentCar_audience}

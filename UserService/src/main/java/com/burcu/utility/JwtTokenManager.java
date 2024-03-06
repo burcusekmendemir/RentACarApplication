@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.burcu.exception.AuthServiceException;
 import com.burcu.exception.ErrorType;
+import com.burcu.exception.UserServiceException;
 import com.burcu.utility.enums.ERole;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,10 @@ public class JwtTokenManager {
 
     /**
      * Token yaratmak için kullanılan methodtur.
-     * @param id
-     * @return
      */
 
     public Optional<String> createToken(Long id){  // TODO: role ile alakalı bir token da oluşturulmalı mı?
-        String token="";
+        String token;
         try {
             token= JWT.create()
                     .withIssuer(ISSUER)
@@ -48,11 +46,6 @@ public class JwtTokenManager {
         }
     }
 
-    /**
-     * createToken() methoduyla oluşturulan tokenın doğruluğunu kontrol eden methodtur.
-     * @param token
-     * @return
-     */
     public Boolean validateToken(String token){
         try {
             Algorithm algorithm=Algorithm.HMAC512(SECRETKEY);
@@ -63,12 +56,17 @@ public class JwtTokenManager {
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
-            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+            throw new UserServiceException(ErrorType.INVALID_TOKEN);
 
         }
         return true;
     }
 
+    /**
+     * createToken() methoduyla oluşturulan tokenın doğruluğunu kontrol eden methodtur.
+     * @param token
+     * @return
+     */
     public Optional<Long> getIdFromToken(String token){
         try {
             Algorithm algorithm=Algorithm.HMAC512(SECRETKEY);
@@ -76,7 +74,7 @@ public class JwtTokenManager {
             DecodedJWT decodedJWT= verifier.verify(token);
 
             if (decodedJWT==null){
-                throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+                throw new UserServiceException(ErrorType.INVALID_TOKEN);
             }
 
             Long id=decodedJWT.getClaim("id").asLong();
@@ -84,8 +82,10 @@ public class JwtTokenManager {
 
         }catch (Exception e){
             System.out.println(e.getMessage());
-            throw new AuthServiceException(ErrorType.INVALID_TOKEN);
+            throw new UserServiceException(ErrorType.INVALID_TOKEN);
         }
     }
+
+
 
 }

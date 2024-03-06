@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping(LOGIN)
-    public ResponseEntity<Boolean> doLogin(@RequestBody LoginRequestDto dto){
+    public ResponseEntity<String> doLogin(@RequestBody LoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }
 

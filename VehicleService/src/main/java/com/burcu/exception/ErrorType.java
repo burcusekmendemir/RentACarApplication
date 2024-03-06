@@ -23,7 +23,8 @@ public enum ErrorType {
     PLATE_ALREADY_EXISTS(4117,"Bu plaka zaten mevcut" ,HttpStatus.BAD_REQUEST ),
     VEHICLE_NOT_FOUND(4118,"Arac bulunamadi" ,HttpStatus.BAD_REQUEST ),
     VEHICLE_IS_RENTED(4119,"Arac kirada" ,HttpStatus.BAD_REQUEST ),
-    VEHICLE_IS_NOT_SUITABLE(4120,"Arac uygun değil!" ,HttpStatus.BAD_REQUEST );
+    VEHICLE_IS_NOT_SUITABLE(4120,"Arac uygun değil!" ,HttpStatus.BAD_REQUEST ),
+    RENTING_IS_ALREADY_EXISTS(4121,"Bu kiralama zaten mevcut" , HttpStatus.BAD_REQUEST );
 
     private int code;
     private String message;

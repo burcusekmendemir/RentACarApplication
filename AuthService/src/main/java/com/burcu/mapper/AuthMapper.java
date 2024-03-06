@@ -5,6 +5,7 @@ import com.burcu.dto.request.RegisterRequestDto;
 import com.burcu.dto.response.RegisterResponseDto;
 import com.burcu.entity.Auth;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -17,5 +18,6 @@ public interface AuthMapper {
 
     RegisterResponseDto fromAuthToRegisterResponseDto(final Auth auth);
 
+    @Mapping(source = "id",target = "authId")
     CreateUserRequestDto fromAuthToCreateUserRequestDto(final Auth auth);
 }

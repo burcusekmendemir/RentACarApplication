@@ -2,6 +2,7 @@ package com.burcu.controller;
 
 import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.request.UpdateUserRequestDto;
+import com.burcu.dto.response.UserResponseDto;
 import com.burcu.entity.User;
 import com.burcu.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,13 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(dto));
     }
 
-    @GetMapping(ACTIVATE_USER +"/{authId}")
+    @GetMapping(ACTIVATE_USER+"/{authId}")
     public ResponseEntity<Boolean> activateUser(@PathVariable Long authId){
         return ResponseEntity.ok(userService.activateUser(authId));
+    }
+
+    @GetMapping(FIND_BY_TOKEN)
+    public ResponseEntity<UserResponseDto> findByToken(@RequestParam String token){
+        return ResponseEntity.ok(userService.findByToken(token));
     }
 }

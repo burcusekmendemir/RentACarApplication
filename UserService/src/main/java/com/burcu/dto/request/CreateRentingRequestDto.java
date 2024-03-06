@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 public class CreateRentingRequestDto {
 
-    private String token;
+    private String userId;
     private String vehicleId;
     private String startDate;
     private String endDate;

@@ -49,19 +49,18 @@ public class AuthService extends ServiceManager<Auth,Long> {
 
     /**
      * Kullanıcının Username ve password ile giriş yapabilmesini sağlar.
-     * // TODO : token login sırasında yaratılmalı.
      * @param dto
      * @return
      */
-    public Boolean doLogin(LoginRequestDto dto) {
+    public String doLogin(LoginRequestDto dto) {
         Optional<Auth> optionalAuth= authRepository.findByUsernameAndPassword(dto.getUsername(),dto.getPassword());
         if (optionalAuth.isEmpty()){
             throw new AuthServiceException(ErrorType.LOGIN_ERROR);
         }
         if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)){
-            jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
-                    .orElseThrow(()-> new AuthServiceException(ErrorType.TOKEN_NOT_CREATED));
-            return true;
+            return jwtTokenManager.createToken(optionalAuth.get().getId())
+                    .orElseThrow(()-> {throw new AuthServiceException(ErrorType.TOKEN_NOT_CREATED);
+                    });
         }
         throw new AuthServiceException(ErrorType.ACCOUNT_NOT_ACTIVE);
     }
@@ -72,9 +71,8 @@ public class AuthService extends ServiceManager<Auth,Long> {
      * @param dto
      * @return
      */
-
     public Boolean accountActivation(ActivateAccountRequestDto dto) {
-        Optional<Auth> authOptional= authRepository.findById(dto.getAuthId());
+        Optional<Auth> authOptional= findById(dto.getAuthId());
         if (authOptional.isEmpty()){
             throw new AuthServiceException(ErrorType.USER_NOT_FOUND);
         }
