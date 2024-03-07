@@ -22,5 +22,6 @@ public class RestApiUrls {
     public static final String UPDATE= "/update";
     public static final String ACTIVATE_ACCOUNT = "/activate-account" ;
 
+
     public static final String UPDATE_EMAIL= "/update-email";
 }

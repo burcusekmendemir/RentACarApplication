@@ -1,7 +1,9 @@
 package com.burcu.service;
 
+import com.burcu.dto.request.BalanceRequestDto;
 import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.request.UpdateUserRequestDto;
+import com.burcu.dto.response.BalanceResponseDto;
 import com.burcu.dto.response.UserResponseDto;
 import com.burcu.entity.User;
 import com.burcu.exception.ErrorType;
@@ -51,12 +53,12 @@ public class UserService extends ServiceManager<User,String> {
      * @return
      */
     public User updateUser(UpdateUserRequestDto dto) {
-        Optional<User> userOptional= userRepository.findByAuthId(dto.getAuthId());
-        if (userOptional.isEmpty()){
+        Optional<Long> authId=jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
             throw new UserServiceException(ErrorType.USER_NOT_FOUND);
         }
 
-        User user= userOptional.get();
+        User user= userRepository.findByAuthId(authId.get()).get();
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setAddress(dto.getAddress());
@@ -64,6 +66,7 @@ public class UserService extends ServiceManager<User,String> {
         user.setAvatar(dto.getAvatar());
         user.setName(dto.getName());
         user.setSurname(dto.getSurname());
+        user.setBalance(dto.getBalance());
 
         return update(user);
 
@@ -85,6 +88,12 @@ public class UserService extends ServiceManager<User,String> {
         return true;
     }
 
+    /**
+     * Girilen token bilgisine göre böyle bir kayıtın olup olmadığı kontrol edilir.
+     * @param token
+     * @return
+     */
+
     public UserResponseDto findByToken(String token) {
         Optional<Long> authId= jwtTokenManager.getIdFromToken(token);
         if (authId.isEmpty()){
@@ -92,6 +101,23 @@ public class UserService extends ServiceManager<User,String> {
         }
         User user= userRepository.findByAuthId(authId.get()).get();
         return UserMapper.INSTANCE.fromUserToUserResponseDto(user);
+    }
+
+    /**
+     * Token ile bakiye yüklemesi yapılır.
+     * @param dto
+     * @return
+     */
+
+    public BalanceResponseDto topUpBalance(BalanceRequestDto dto) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new UserServiceException(ErrorType.USER_NOT_FOUND);
+        }
+        User user= userRepository.findByAuthId(authId.get()).get();
+        user.setBalance(user.getBalance()+dto.getBalance());
+        update(user);
+        return UserMapper.INSTANCE.fromUserToBalanceResponseDto(user);
     }
 }
 

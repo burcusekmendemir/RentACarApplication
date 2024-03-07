@@ -26,10 +26,10 @@ public class Auth extends BaseEntity {
     private String email;
     private String phoneNumber;
     private String address;
+    private Double balance;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private ERole role=ERole.USER;
+    private ERole role;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default

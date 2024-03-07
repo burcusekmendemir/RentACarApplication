@@ -2,6 +2,7 @@ package com.burcu.mapper;
 
 import com.burcu.dto.request.CreateRentingRequestDto;
 import com.burcu.dto.request.CreateUserRequestDto;
+import com.burcu.dto.response.BalanceResponseDto;
 import com.burcu.dto.response.UserResponseDto;
 import com.burcu.entity.User;
 import org.mapstruct.Mapper;
@@ -18,4 +19,6 @@ public interface UserMapper {
     CreateRentingRequestDto fromUserToCreateRentingRequestDto(final User user);
 
     UserResponseDto fromUserToUserResponseDto(final User user);
+
+    BalanceResponseDto fromUserToBalanceResponseDto(final User user);
 }

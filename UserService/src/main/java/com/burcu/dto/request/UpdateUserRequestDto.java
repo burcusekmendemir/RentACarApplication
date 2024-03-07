@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 public class UpdateUserRequestDto {
 
-    private Long authId;
+    private String token;
     private String name;
     private String surname;
     @Email
@@ -23,4 +23,5 @@ public class UpdateUserRequestDto {
     private String address;
     private String about;
     private String avatar;
+    private Double balance;
 }

@@ -31,4 +31,5 @@ public class AuthController {
     public ResponseEntity<Boolean> accountActivation(@RequestBody ActivateAccountRequestDto dto){
         return ResponseEntity.ok(authService.accountActivation(dto));
     }
+
 }

@@ -1,5 +1,6 @@
 package com.burcu.dto.request;
 
+import com.burcu.utility.enums.ERole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -27,4 +28,5 @@ public class CreateUserRequestDto {
     @NotNull
     @Email
     private String email;
+    private ERole role;
 }

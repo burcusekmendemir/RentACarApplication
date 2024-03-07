@@ -1,7 +1,9 @@
 package com.burcu.controller;
 
+import com.burcu.dto.request.BalanceRequestDto;
 import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.request.UpdateUserRequestDto;
+import com.burcu.dto.response.BalanceResponseDto;
 import com.burcu.dto.response.UserResponseDto;
 import com.burcu.entity.User;
 import com.burcu.service.UserService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.burcu.constants.RestApiUrls.*;
+import static com.burcu.constants.RestApiUrls.TOP_UP_BALANCE;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,4 +47,11 @@ public class UserController {
     public ResponseEntity<UserResponseDto> findByToken(@RequestParam String token){
         return ResponseEntity.ok(userService.findByToken(token));
     }
+
+    @PutMapping(TOP_UP_BALANCE)
+    public ResponseEntity<BalanceResponseDto> topUpBalance(@RequestBody BalanceRequestDto dto){
+        return ResponseEntity.ok(userService.topUpBalance(dto));
+    }
+
+
 }

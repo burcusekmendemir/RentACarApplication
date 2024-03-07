@@ -1,5 +1,6 @@
 package com.burcu.entity;
 
+import com.burcu.utility.enums.ERole;
 import com.burcu.utility.enums.EStatus;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,12 +30,16 @@ public class User extends BaseEntity {
     private String address;
     private String about;
     private String avatar;
-
+    private Double balance;
+    private ERole role;
     @Builder.Default
     private List<String> rentingList=new ArrayList<>();
 
     @Builder.Default
     EStatus status=EStatus.PENDING;
+
+
+
 
 
 }

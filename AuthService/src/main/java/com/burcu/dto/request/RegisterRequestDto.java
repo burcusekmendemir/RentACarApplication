@@ -1,7 +1,10 @@
 package com.burcu.dto.request;
 
 
+import com.burcu.utility.enums.ERole;
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -41,6 +44,9 @@ public class RegisterRequestDto {
     @NotNull
     private String phoneNumber;
 
-    @NotNull
-    private String address;
+    @Enumerated(EnumType.STRING)
+    private ERole role;
+
+
+
 }
