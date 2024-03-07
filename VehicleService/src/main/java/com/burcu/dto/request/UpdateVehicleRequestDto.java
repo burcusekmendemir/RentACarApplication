@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class UpdateVehicleRequestDto {
 
     private String id;
+    private String token;
     private String plate;
     private String modelId;
     private EVehicleType type;

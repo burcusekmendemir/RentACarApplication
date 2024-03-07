@@ -1,7 +1,9 @@
 package com.burcu.service;
 
 import com.burcu.dto.request.CreateVehicleRequestDto;
+import com.burcu.dto.request.UpdatePriceRequestDto;
 import com.burcu.dto.request.UpdateVehicleRequestDto;
+import com.burcu.dto.response.VehicleStatusResponseDto;
 import com.burcu.entity.Brand;
 import com.burcu.entity.Model;
 import com.burcu.entity.Vehicle;
@@ -94,7 +96,12 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
     }
 
 
-    //TODO: token eklenmeli sadece araç sahipleri adminler yapabilmeli.
+    /**
+     * Aracın bilgilerinin güncellenmesini sağlar.
+     * @param dto
+     * @return
+     */
+    //TODO: token eklenmeli sadece adminler yapabilmeli.
     public Vehicle updateVehicle(UpdateVehicleRequestDto dto) {
         Optional<Vehicle> vehicleOptional=vehicleRepository.findOptionalById(dto.getId());
         if (vehicleOptional.isEmpty()){
@@ -102,5 +109,34 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
         }
         Vehicle vehicle=VehicleMapper.INSTANCE.fromUpdateVehicleRequestDtoToVehicle(dto);
         return  update(vehicle);
+    }
+
+    /**
+     * Uygulama sahibinin araç kiralama fiyatlarında değişiklik yapmasını sağlar.
+     * @param dto
+     * @return
+     */
+
+    //TODO: token eklenmeli sadece adminler yapabilmeli.
+    public Vehicle updatePrice(UpdatePriceRequestDto dto) {
+        Optional<Vehicle> vehicleOptional=vehicleRepository.findOptionalById(dto.getId());
+        if (vehicleOptional.isEmpty()){
+            throw new VehicleServiceException(ErrorType.VEHICLE_NOT_FOUND);
+        }
+        Vehicle vehicle=vehicleOptional.get();
+        vehicle.setHourlyPrice(dto.getHourlyPrice());
+        vehicle.setDailyPrice(dto.getDailyPrice());
+        vehicle.setWeeklyPrice(dto.getWeeklyPrice());
+        return update(vehicle);
+    }
+
+    /**
+     * Uygulama sahibinin her an araç durumlarını görüntüleyebilmesini sağlar.
+     * @return
+     */
+    //TODO: token eklenmeli sadece adminler yapabilmeli.
+    public List<VehicleStatusResponseDto> viewVehicleStatus() {
+        List<Vehicle> vehicleList= findAll();
+        return vehicleList.stream().map(VehicleMapper.INSTANCE::fromVehicleToVehicleStatusResponseDto).toList();
     }
 }

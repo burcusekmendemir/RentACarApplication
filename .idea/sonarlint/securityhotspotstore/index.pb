@@ -207,3 +207,7 @@ s
 CVehicleService/src/main/java/com/burcu/utility/JwtTokenManager.java,f\6\f64ce290d92168426e900daea81bc7a57491076d
 
 OVehicleService/src/main/java/com/burcu/dto/request/UpdateVehicleRequestDto.java,5\1\517334195400b0e98ea6a4cf9fc3a65fe0b3a10e
+}
+MVehicleService/src/main/java/com/burcu/dto/request/UpdatePriceRequestDto.java,8\8\881510711be649df120788bfe8602727424d05b7
+Å
+QVehicleService/src/main/java/com/burcu/dto/response/VehicleStatusResponseDto.java,7\d\7da2cb341f497bb1ee66a847e7b0bf94a1917b81

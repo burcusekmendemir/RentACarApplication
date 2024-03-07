@@ -1,7 +1,9 @@
 package com.burcu.controller;
 
 import com.burcu.dto.request.CreateVehicleRequestDto;
+import com.burcu.dto.request.UpdatePriceRequestDto;
 import com.burcu.dto.request.UpdateVehicleRequestDto;
+import com.burcu.dto.response.VehicleStatusResponseDto;
 import com.burcu.entity.Vehicle;
 import com.burcu.service.VehicleService;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,17 @@ public class VehicleController {
     @PostMapping(UPDATE_VEHICLE)
     public ResponseEntity<Vehicle> updateVehicle(@RequestBody UpdateVehicleRequestDto dto){
         return ResponseEntity.ok(vehicleService.updateVehicle(dto));
+    }
+
+    @PostMapping(UPDATE_PRICE)
+    public ResponseEntity<Vehicle> updatePrice(@RequestBody UpdatePriceRequestDto dto){
+        return ResponseEntity.ok(vehicleService.updatePrice(dto));
+    }
+
+    //TODO: token sorunu halledilince (@RequestParam String token) ekle!!
+    @GetMapping(VIEW_VEHICLE_STATUS)
+    public ResponseEntity<List<VehicleStatusResponseDto>> viewVehicleStatus(){
+        return ResponseEntity.ok(vehicleService.viewVehicleStatus());
     }
 
 }
