@@ -199,3 +199,11 @@ v
 FUserService/src/main/java/com/burcu/dto/request/BalanceRequestDto.java,9\1\918a4506014e8d9e0c751c51fee8f2a83afae8ca
 x
 HUserService/src/main/java/com/burcu/dto/response/BalanceResponseDto.java,3\a\3ac618fffe14f4db2cd09770477f286897432842
+z
+JUserService/src/main/java/com/burcu/dto/request/ViewProfileRequestDto.java,9\f\9fd3c64b84e43346259c306535894d98d3c77586
+|
+LUserService/src/main/java/com/burcu/dto/response/ViewProfileResponseDto.java,0\a\0a3d2c5a7f0f83e36cf3d2379f0228973e648ad2
+s
+CVehicleService/src/main/java/com/burcu/utility/JwtTokenManager.java,f\6\f64ce290d92168426e900daea81bc7a57491076d
+
+OVehicleService/src/main/java/com/burcu/dto/request/UpdateVehicleRequestDto.java,5\1\517334195400b0e98ea6a4cf9fc3a65fe0b3a10e

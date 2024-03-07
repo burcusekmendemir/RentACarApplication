@@ -1,6 +1,7 @@
 package com.burcu.mapper;
 
 import com.burcu.dto.request.CreateVehicleRequestDto;
+import com.burcu.dto.request.UpdateVehicleRequestDto;
 import com.burcu.entity.Vehicle;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -12,4 +13,6 @@ public interface VehicleMapper {
     VehicleMapper INSTANCE= Mappers.getMapper(VehicleMapper.class);
 
     Vehicle fromCreateVehicleDtoToVehicle(final CreateVehicleRequestDto dto);
+
+    Vehicle fromUpdateVehicleRequestDtoToVehicle(final UpdateVehicleRequestDto dto);
 }

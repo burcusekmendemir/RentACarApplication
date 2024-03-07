@@ -1,24 +1,21 @@
-package com.burcu.entity;
+package com.burcu.dto.request;
 
 import com.burcu.utility.enums.EColour;
 import com.burcu.utility.enums.EVehicleStatus;
 import com.burcu.utility.enums.EVehicleType;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-public class Vehicle extends BaseEntity{
 
-    @Id
+public class UpdateVehicleRequestDto {
+
     private String id;
-    private Long authId;
     private String plate;
     private String modelId;
     private EVehicleType type;
@@ -30,12 +27,5 @@ public class Vehicle extends BaseEntity{
     private Double hourlyPrice;
     private Double dailyPrice;
     private Double weeklyPrice;
-
-
-
-
-    @Builder.Default
-    private EVehicleStatus status= EVehicleStatus.NOT_RENTED;
-
-
+    private EVehicleStatus status;
 }

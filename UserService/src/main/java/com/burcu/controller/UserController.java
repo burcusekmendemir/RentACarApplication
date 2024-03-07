@@ -5,6 +5,7 @@ import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.request.UpdateUserRequestDto;
 import com.burcu.dto.response.BalanceResponseDto;
 import com.burcu.dto.response.UserResponseDto;
+import com.burcu.dto.response.ViewProfileResponseDto;
 import com.burcu.entity.User;
 import com.burcu.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,11 @@ public class UserController {
     @PutMapping(TOP_UP_BALANCE)
     public ResponseEntity<BalanceResponseDto> topUpBalance(@RequestBody BalanceRequestDto dto){
         return ResponseEntity.ok(userService.topUpBalance(dto));
+    }
+
+    @GetMapping(VIEW_PROFILE)
+    public ResponseEntity<ViewProfileResponseDto> viewProfile(@RequestParam String token){
+        return ResponseEntity.ok(userService.viewProfile(token));
     }
 
 

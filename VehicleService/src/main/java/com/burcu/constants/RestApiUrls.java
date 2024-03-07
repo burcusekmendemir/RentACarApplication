@@ -15,5 +15,5 @@ public class RestApiUrls {
     public static final String SELECT_VEHICLE= "/select-vehicle";
     public static final String RENT_CAR= "/rent-car";
     public static final String FIND_BY_TOKEN= "/find-by-token";
-
+    public static final String UPDATE_VEHICLE= "/update-vehicle";
 }

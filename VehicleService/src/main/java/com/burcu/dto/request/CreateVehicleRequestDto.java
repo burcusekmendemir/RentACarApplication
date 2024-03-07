@@ -1,6 +1,7 @@
 package com.burcu.dto.request;
 
 import com.burcu.utility.enums.EColour;
+import com.burcu.utility.enums.ERole;
 import com.burcu.utility.enums.EVehicleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,8 @@ import lombok.NoArgsConstructor;
 
 public class CreateVehicleRequestDto {
 
+    private String token;
+    private ERole role;
     private String plate;
     private String brandName;
     private String modelName;

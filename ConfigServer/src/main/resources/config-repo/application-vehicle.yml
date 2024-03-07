@@ -12,3 +12,8 @@ spring:
       database: RentACarUserDB
       username: burcuser
       password: root
+
+jwt:
+  secretKey: ${rentCar_secretKey}
+  issuer: ${rentCar_issuer}
+  audience: ${rentCar_audience}

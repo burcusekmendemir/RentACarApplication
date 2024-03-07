@@ -5,6 +5,7 @@ import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.request.UpdateUserRequestDto;
 import com.burcu.dto.response.BalanceResponseDto;
 import com.burcu.dto.response.UserResponseDto;
+import com.burcu.dto.response.ViewProfileResponseDto;
 import com.burcu.entity.User;
 import com.burcu.exception.ErrorType;
 import com.burcu.exception.UserServiceException;
@@ -104,11 +105,12 @@ public class UserService extends ServiceManager<User,String> {
     }
 
     /**
-     * Token ile bakiye yüklemesi yapılır.
+     * Bakiye yüklemesi yapılır.
      * @param dto
      * @return
      */
 
+    // payment service ile.
     public BalanceResponseDto topUpBalance(BalanceRequestDto dto) {
         Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
         if (authId.isEmpty()){
@@ -119,6 +121,24 @@ public class UserService extends ServiceManager<User,String> {
         update(user);
         return UserMapper.INSTANCE.fromUserToBalanceResponseDto(user);
     }
+
+
+    /**
+     * Kullanıcının profilini görüntülemeyi sağlar.
+     * @param token
+     * @return
+     */
+    public ViewProfileResponseDto viewProfile(String token) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(token);
+        if (authId.isEmpty()){
+            throw new UserServiceException(ErrorType.USER_NOT_FOUND);
+        }
+        User user= userRepository.findByAuthId(authId.get()).get();
+        return UserMapper.INSTANCE.fromUserToViewProfileResponseDto(user);
+    }
+
+
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.burcu.controller;
 
 import com.burcu.dto.request.CreateVehicleRequestDto;
+import com.burcu.dto.request.UpdateVehicleRequestDto;
 import com.burcu.entity.Vehicle;
 import com.burcu.service.VehicleService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,11 @@ public class VehicleController {
     @GetMapping(SELECT_VEHICLE)
     public ResponseEntity<Vehicle> selectVehicle(@RequestParam String vehicleId){
         return ResponseEntity.ok(vehicleService.selectVehicle(vehicleId));
+    }
+
+    @PostMapping(UPDATE_VEHICLE)
+    public ResponseEntity<Vehicle> updateVehicle(@RequestBody UpdateVehicleRequestDto dto){
+        return ResponseEntity.ok(vehicleService.updateVehicle(dto));
     }
 
 }

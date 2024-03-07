@@ -4,6 +4,7 @@ import com.burcu.dto.request.CreateRentingRequestDto;
 import com.burcu.dto.request.CreateUserRequestDto;
 import com.burcu.dto.response.BalanceResponseDto;
 import com.burcu.dto.response.UserResponseDto;
+import com.burcu.dto.response.ViewProfileResponseDto;
 import com.burcu.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -21,4 +22,6 @@ public interface UserMapper {
     UserResponseDto fromUserToUserResponseDto(final User user);
 
     BalanceResponseDto fromUserToBalanceResponseDto(final User user);
+
+    ViewProfileResponseDto fromUserToViewProfileResponseDto(final User user);
 }
