@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 public class CreateVehicleRequestDto {
 
     private String token;
-    private Long authId;
-    private ERole role;
     private String plate;
     private String brandName;
     private String modelName;

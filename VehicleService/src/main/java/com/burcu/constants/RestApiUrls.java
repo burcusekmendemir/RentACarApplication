@@ -18,4 +18,9 @@ public class RestApiUrls {
     public static final String UPDATE_VEHICLE= "/update-vehicle";
     public static final String UPDATE_PRICE= "/update-price";
     public static final String VIEW_VEHICLE_STATUS= "/view-vehicle-status";
+    public static final String FUELING= "/fueling";
+    public static final String FIND_VEHICLE_BY_FUEL= "/find-vehicle-by-fuel";
+
+
+
 }

@@ -13,6 +13,7 @@ import com.burcu.repository.AuthRepository;
 import com.burcu.utility.CodeGenerator;
 import com.burcu.utility.JwtTokenManager;
 import com.burcu.utility.ServiceManager;
+import com.burcu.utility.enums.ERole;
 import com.burcu.utility.enums.EStatus;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
             throw new AuthServiceException(ErrorType.LOGIN_ERROR);
         }
         if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)){
-            return jwtTokenManager.createToken(optionalAuth.get().getId())
+            return jwtTokenManager.createToken(optionalAuth.get().getId(), optionalAuth.get().getRole())
                     .orElseThrow(()-> {throw new AuthServiceException(ErrorType.TOKEN_NOT_CREATED);
                     });
         }

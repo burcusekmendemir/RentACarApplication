@@ -31,7 +31,7 @@ public class JwtTokenManager {
      * @return
      */
 
-    public Optional<String> createToken(Long id){  // TODO: role ile alakalı bir token da oluşturulmalı mı?
+    public Optional<String> createToken(Long id){
         String token="";
         try {
             token= JWT.create()
@@ -47,6 +47,27 @@ public class JwtTokenManager {
             return Optional.empty();
         }
     }
+
+    public Optional<String> createToken(Long id,ERole role){
+        String token="";
+        try {
+            token= JWT.create()
+                    .withIssuer(ISSUER)
+                    .withAudience(AUDIENCE)
+                    .withIssuedAt(new Date())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + EXDATE))
+                    .withClaim("id",id)
+                    .withClaim("role",role.toString())
+                    .sign(Algorithm.HMAC512(SECRETKEY));
+            return Optional.of(token);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+
+
 
     /**
      * createToken() methoduyla oluşturulan tokenın doğruluğunu kontrol eden methodtur.

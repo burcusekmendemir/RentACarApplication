@@ -1,8 +1,7 @@
 package com.burcu.controller;
 
-import com.burcu.dto.request.CreateVehicleRequestDto;
-import com.burcu.dto.request.UpdatePriceRequestDto;
-import com.burcu.dto.request.UpdateVehicleRequestDto;
+import com.burcu.dto.request.*;
+import com.burcu.dto.response.VehicleFuelResponseDto;
 import com.burcu.dto.response.VehicleStatusResponseDto;
 import com.burcu.entity.Vehicle;
 import com.burcu.service.VehicleService;
@@ -31,13 +30,13 @@ public class VehicleController {
     }
 
     @GetMapping(FIND_VEHICLES_BY_STATUS_AND_AMOUNT_OF_FUEL)
-    public ResponseEntity<List<Vehicle>> findVehicleByStatusAndAmountOfFuel(){
-        return ResponseEntity.ok(vehicleService.findVehicleByStatusAndAmountOfFuel());
+    public ResponseEntity<List<Vehicle>> findVehicleByStatusAndAmountOfFuel(@RequestParam String token){
+        return ResponseEntity.ok(vehicleService.findVehicleByStatusAndAmountOfFuel(token));
     }
 
-    @GetMapping(SELECT_VEHICLE)
-    public ResponseEntity<Vehicle> selectVehicle(@RequestParam String vehicleId){
-        return ResponseEntity.ok(vehicleService.selectVehicle(vehicleId));
+    @PostMapping(SELECT_VEHICLE)
+    public ResponseEntity<Vehicle> selectVehicle(@RequestBody SelectVehicleRequestDto dto){
+        return ResponseEntity.ok(vehicleService.selectVehicle(dto));
     }
 
     @PostMapping(UPDATE_VEHICLE)
@@ -50,10 +49,19 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleService.updatePrice(dto));
     }
 
-    //TODO: token sorunu halledilince (@RequestParam String token) ekle!!
     @GetMapping(VIEW_VEHICLE_STATUS)
-    public ResponseEntity<List<VehicleStatusResponseDto>> viewVehicleStatus(){
-        return ResponseEntity.ok(vehicleService.viewVehicleStatus());
+    public ResponseEntity<List<VehicleStatusResponseDto>> viewVehicleStatus(@RequestParam String token){
+        return ResponseEntity.ok(vehicleService.viewVehicleStatus(token));
+    }
+
+    @PostMapping(FUELING)
+    public ResponseEntity<Boolean> fueling(@RequestBody UpdateFuelRequestDto dto){
+        return ResponseEntity.ok(vehicleService.fueling(dto));
+    }
+
+    @GetMapping(FIND_VEHICLE_BY_FUEL)
+    public ResponseEntity<List<VehicleFuelResponseDto>> findVehicleByFuel(@RequestParam String token){
+        return ResponseEntity.ok(vehicleService.findVehicleByFuel(token));
     }
 
 }

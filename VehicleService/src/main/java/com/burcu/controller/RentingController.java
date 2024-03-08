@@ -1,6 +1,7 @@
 package com.burcu.controller;
 
 import com.burcu.dto.request.CreateRentingRequestDto;
+import com.burcu.dto.response.RentingResponseDto;
 import com.burcu.entity.Renting;
 import com.burcu.service.RentingService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class RentingController {
     private final RentingService rentingService;
 
     @PostMapping(RENT_CAR)
-    public ResponseEntity<Boolean> rentCar(@RequestBody CreateRentingRequestDto dto){
+    public ResponseEntity<RentingResponseDto> rentCar(@RequestBody CreateRentingRequestDto dto){
         return ResponseEntity.ok(rentingService.rentCar(dto));
     }
 

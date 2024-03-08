@@ -1,8 +1,7 @@
 package com.burcu.service;
 
-import com.burcu.dto.request.CreateVehicleRequestDto;
-import com.burcu.dto.request.UpdatePriceRequestDto;
-import com.burcu.dto.request.UpdateVehicleRequestDto;
+import com.burcu.dto.request.*;
+import com.burcu.dto.response.VehicleFuelResponseDto;
 import com.burcu.dto.response.VehicleStatusResponseDto;
 import com.burcu.entity.Brand;
 import com.burcu.entity.Model;
@@ -45,14 +44,16 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
 
     // TODO: token hatası. geçersiz token diyor çözümleme yapamıyor ya da eksiklik var.
     public Vehicle createVehicle(CreateVehicleRequestDto dto) {
-//        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
-//        if (authId.isEmpty()){
-//            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
-//        }
-//        Optional<String> userRole=jwtTokenManager.getRoleFromToken(dto.getToken());
-//        if (!userRole.isPresent() || !userRole.get().equals("ADMIN")) {
-//            throw new VehicleServiceException(ErrorType.UNAUTHORIZED);
-//        }
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
+
+        Optional<String> userRole=jwtTokenManager.getRoleFromToken(dto.getToken());
+        if (!userRole.isPresent() || !userRole.get().equals("ADMIN")) {
+
+            throw new VehicleServiceException(ErrorType.UNAUTHORIZED);
+        }
 
         Brand brand=brandService.createBrand(BrandMapper.INSTANCE.fromVehicleDtoToBrandDto(dto));
         Model model= modelService.createModel(ModelMapper.INSTANCE.fromVehicleDtoToModelDto(dto));
@@ -72,7 +73,11 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
      * Kiralama yapmadan önce kiralık olmayan( NOT_RENTED) ve yakıt miktarı 20 litreden fazla araçları görüntülememizi sağlar.
      * @return
      */
-    public List<Vehicle> findVehicleByStatusAndAmountOfFuel() {
+    public List<Vehicle> findVehicleByStatusAndAmountOfFuel(String token) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(token);
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
         List<Vehicle> vehicleList=findAll();
         return vehicleList.stream().filter(x->x.getStatus().equals(EVehicleStatus.NOT_RENTED) && x.getAmountOfFuel()>20).toList();
     }
@@ -80,12 +85,12 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
     /**
      * Araç seçimi yapmamızı sağlayan methodtur. Kullanıcının girdiği "Id" ile eşleşen bir araç var ise
      * ve status'u NOT_RENTED ise aracı seçmemizi sağlar.
-     * @param vehicleId
+     * @param
      * @return
      */
-    public Vehicle selectVehicle(String vehicleId) {
-        List<Vehicle> vehicleList=findVehicleByStatusAndAmountOfFuel();
-        Optional<Vehicle> vehicle=vehicleRepository.findOptionalById(vehicleId);
+    public Vehicle selectVehicle(SelectVehicleRequestDto dto) {
+        List<Vehicle> vehicleList=findVehicleByStatusAndAmountOfFuel(dto.getToken());
+        Optional<Vehicle> vehicle=vehicleRepository.findOptionalById(dto.getVehicleId());
         if (vehicle.isEmpty()){
             throw new VehicleServiceException(ErrorType.VEHICLE_NOT_FOUND);
         }
@@ -101,8 +106,11 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
      * @param dto
      * @return
      */
-    //TODO: token eklenmeli sadece adminler yapabilmeli.
     public Vehicle updateVehicle(UpdateVehicleRequestDto dto) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
         Optional<Vehicle> vehicleOptional=vehicleRepository.findOptionalById(dto.getId());
         if (vehicleOptional.isEmpty()){
             throw new VehicleServiceException(ErrorType.VEHICLE_NOT_FOUND);
@@ -116,9 +124,11 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
      * @param dto
      * @return
      */
-
-    //TODO: token eklenmeli sadece adminler yapabilmeli.
     public Vehicle updatePrice(UpdatePriceRequestDto dto) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
         Optional<Vehicle> vehicleOptional=vehicleRepository.findOptionalById(dto.getId());
         if (vehicleOptional.isEmpty()){
             throw new VehicleServiceException(ErrorType.VEHICLE_NOT_FOUND);
@@ -134,9 +144,74 @@ public class VehicleService extends ServiceManager<Vehicle, String> {
      * Uygulama sahibinin her an araç durumlarını görüntüleyebilmesini sağlar.
      * @return
      */
-    //TODO: token eklenmeli sadece adminler yapabilmeli.
-    public List<VehicleStatusResponseDto> viewVehicleStatus() {
+    public List<VehicleStatusResponseDto> viewVehicleStatus(String token) {
+        Optional<Long> authId= jwtTokenManager.getIdFromToken(token);
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
+
+        Optional<String> userRole=jwtTokenManager.getRoleFromToken(token);
+        if (!userRole.isPresent() || !userRole.get().equals("ADMIN")) {
+            throw new VehicleServiceException(ErrorType.UNAUTHORIZED);
+        }
+
         List<Vehicle> vehicleList= findAll();
         return vehicleList.stream().map(VehicleMapper.INSTANCE::fromVehicleToVehicleStatusResponseDto).toList();
     }
+
+
+    /**
+     * Uygulama sahibi/sahipleri araçları yakıt durumlarına göre görüntüleyebilir.
+     * @param token
+     * @return
+     */
+    public List<VehicleFuelResponseDto> findVehicleByFuel(String token) {
+        Optional<Long> authId=jwtTokenManager.getIdFromToken(token);
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
+        Optional<String> userRole=jwtTokenManager.getRoleFromToken(token);
+        if (userRole.isEmpty() || !userRole.get().equals("ADMIN")) {
+            throw new VehicleServiceException(ErrorType.UNAUTHORIZED);
+        }
+        List<Vehicle> vehicleList=findAll();
+        return vehicleList.stream().map(VehicleMapper.INSTANCE::fromVehicleToVehicleFuelResponseDto).toList();
+    }
+
+
+
+
+    /**
+     * Uygulama sahibinin kirada olmayan ve yakıt durumu kritik seviyede olan araçların
+     * depolarını doldurmasını sağlar.
+     * @param dto
+     * @return
+     */
+    public Boolean fueling(UpdateFuelRequestDto dto) {
+        Optional<Long> authId=jwtTokenManager.getIdFromToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new VehicleServiceException(ErrorType.USER_NOT_FOUND);
+        }
+
+        Optional<String> userRole=jwtTokenManager.getRoleFromToken(dto.getToken());
+        if (userRole.isEmpty() || userRole.get().equals("USER")) {
+            throw new VehicleServiceException(ErrorType.UNAUTHORIZED);
+        }
+
+        Optional<Vehicle> vehicleOptional=vehicleRepository.findOptionalById(dto.getVehicleId());
+        if (vehicleOptional.isEmpty()){
+            throw new VehicleServiceException(ErrorType.VEHICLE_NOT_FOUND);
+        }
+
+        Vehicle vehicle=vehicleOptional.get();
+        if (vehicle.getStatus().equals(EVehicleStatus.NOT_RENTED) && vehicle.getAmountOfFuel()<20){
+            vehicle.setAmountOfFuel(vehicle.getAmountOfFuel()+dto.getAmountOfFuel());
+            update(vehicle);
+            return true;
+        }
+        return false;
+    }
+
+
+
 }
